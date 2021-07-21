@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import 'dotenv/config.js';
 import { Server } from 'socket.io';
 import usersRoutes from './routes/users.js';
+import schedule from 'node-schedule';
+import { createMoney, distributeMoney, defineAnewRank } from './middlewares/simulates.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -28,5 +30,13 @@ app.use(express.urlencoded({ extended: true }));
 // Cross-origin resource sharing
 app.use(cors());
 
+// Routing
 app.use('/users', usersRoutes);
+
+// Simulation for realizing the task requirements
+const job1 = schedule.scheduleJob('1 1 * * * *', createMoney);
+const job3 = schedule.scheduleJob('0 2 * * * *', defineAnewRank);
+const job2 = schedule.scheduleJob('0 0 * * * 0', distributeMoney);
+
+
 

@@ -5,7 +5,9 @@ const UserSchema = new mongoose.Schema({
     country: { type: String, required: true },
     rank: { type: Number, required: true },
     rankYesterday : {type: Number},
-    money: { type: Number, default: 0 }
+    totalMoney: { type: Number, default: 0 },
+    weeklyMoney: {type: Number, default: 0}
+
 }, { collection: 'users' });
 
 export default mongoose.model('User', UserSchema);
