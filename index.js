@@ -33,6 +33,23 @@ app.use(cors());
 // Routing
 app.use('/users', usersRoutes);
 
+// For realtime features
+const connection = mongoose.connection;
+const io = new Server(server, {
+    cors: {
+        origin: ['http://localhost:3000']
+    }
+});
+
+connection.once("open", () => {
+    const usersChangeStream = connection.collection("users").watch();
+    io.on('connection', socket => {
+        usersChangeStream.on('change', data => {
+            socket.emit('changeDb', true)
+        })
+    })
+})
+
 // Simulation for realizing the task requirements
 const job1 = schedule.scheduleJob('1 1 * * * *', createMoney);
 const job3 = schedule.scheduleJob('0 2 * * * *', defineAnewRank);

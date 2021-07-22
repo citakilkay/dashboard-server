@@ -14,7 +14,6 @@ export const getUsersById = async (req, res) => {
         if (!isFindedUser) {
             for (let i = 101; i < 150; i++) {
                 if (users[i]._id == req.params.userId) {
-                    console.log(i)
                     topUsers.push(users[i - 3])
                     topUsers.push(users[i - 2])
                     topUsers.push(users[i - 1])

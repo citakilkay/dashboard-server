@@ -25,7 +25,6 @@ export const distributeMoney = async () => {
         const poolMoney = await Money.findOne({ "name": 'pool money' });
         const allUsers = await User.find({});
         allUsers.sort((a, b) => b.rank >= a.rank ? 1 : b.rank < a.rank ? -1 : 0)
-        console.log(allUsers[0])
         allUsers[0].totalMoney = Math.floor((poolMoney.amount / 0.20) + allUsers[0].totalMoney); // %20 of the pool money to the first user in sorted by ranking.
         allUsers[1].totalMoney = Math.floor((poolMoney.amount * 0.15) + allUsers[1].totalMoney); // %15 of the pool money to the first user in sorted by ranking.
         allUsers[2].totalMoney = Math.floor((poolMoney.amount * 0.10) + allUsers[2].totalMoney); // %10 of the pool money to the first user in sorted by ranking.
